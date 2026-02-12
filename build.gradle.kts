@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "4.0.2"
 	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("plugin.jpa") version "2.3.0"
+	kotlin("kapt") version "2.3.0"
 }
 
 group = "com.univent"
@@ -30,17 +31,34 @@ extra["springModulithVersion"] = "2.0.2"
 
 dependencies {
 	// Spring Boot
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-security-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	kapt("org.springframework.boot:spring-boot-configuration-processor")
+
+	// Spring Modulith
 	implementation("org.springframework.modulith:spring-modulith-starter-core")
 	implementation("org.springframework.modulith:spring-modulith-starter-jpa")
+
+	// Kotlin
 	implementation("tools.jackson.module:jackson-module-kotlin")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("io.github.microutils:kotlin-logging:3.0.5")
+	implementation(kotlin("stdlib"))
+
+	// Database
 	runtimeOnly("com.mysql:mysql-connector-j")
-	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+	// JWT
+	implementation("io.jsonwebtoken:jjwt-api:0.13.0")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
+
+	// Testing
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-security-oauth2-client-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
