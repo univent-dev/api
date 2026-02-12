@@ -1,0 +1,36 @@
+package com.univent.api.config.security
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.web.SecurityFilterChain
+
+@Configuration
+@EnableWebSecurity
+class SecurityConfig {
+    @Bean
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+        // 기본 설정
+        http
+            .csrf { it.disable() }
+            .formLogin { it.disable() }
+            .httpBasic { it.disable() }
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .cors {  }
+
+        // 경로별 권한 설정
+        http.authorizeHttpRequests {
+            it.anyRequest().permitAll()
+        }
+
+        // OAuth2 로그인 설정
+        http.oauth2Login {  }
+
+        // 예외 처리 설정
+        http.exceptionHandling {  }
+
+        return http.build()
+    }
+}
