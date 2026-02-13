@@ -18,7 +18,6 @@ class SecurityConfig {
             .formLogin { it.disable() }
             .httpBasic { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .cors {  }
 
         // 경로별 권한 설정
         http.authorizeHttpRequests {
