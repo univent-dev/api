@@ -6,28 +6,39 @@ import org.springframework.stereotype.Component
 @Component
 class SnowFlakeIdGenerator(
     private val properties: SnowFlakeProperties
-) : IdGenerator { // 도메인의 인터페이스 구현
+) : IdGenerator {
 
     private val epoch = 1680000000000L
     private val datacenterIdBits = 5L
     private val workerIdBits = 5L
     private val sequenceBits = 12L
 
+    private val maxDatacenterId = -1L xor (-1L shl datacenterIdBits.toInt())
+    private val maxWorkerId = -1L xor (-1L shl workerIdBits.toInt())
+    private val sequenceMask = -1L xor (-1L shl sequenceBits.toInt())
+
     private val workerIdShift = sequenceBits
     private val datacenterIdShift = sequenceBits + workerIdBits
     private val timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits
-    private val sequenceMask = -1L xor (-1L shl sequenceBits.toInt())
 
     private var lastTimestamp = -1L
     private var sequence = 0L
+
+    init {
+        require(properties.datacenterId in 0..maxDatacenterId) {
+            "datacenterId는 0에서 $maxDatacenterId 사이여야 합니다."
+        }
+        require(properties.workerId in 0..maxWorkerId) {
+            "workerId는 0에서 $maxWorkerId 사이여야 합니다."
+        }
+    }
 
     @Synchronized
     override fun generateId(): Long {
         var timestamp = currentTime()
 
         if (timestamp < lastTimestamp) {
-            // 시간 역행이 작다면 잠시 대기하는 로직을 추가할 수도 있음
-            throw RuntimeException("Clock moved backwards. Refusing to generate id")
+            throw RuntimeException("시간이 역행했습니다. ID를 생성할 수 없습니다.")
         }
 
         if (lastTimestamp == timestamp) {
@@ -41,16 +52,17 @@ class SnowFlakeIdGenerator(
 
         lastTimestamp = timestamp
 
-        // 비트 연산 가독성 및 속도 최적화
         return ((timestamp - epoch) shl timestampLeftShift.toInt()) or
-                (properties.datacenterId shl datacenterIdShift.toInt()) or
-                (properties.workerId shl workerIdShift.toInt()) or
+                ((properties.datacenterId and maxDatacenterId) shl datacenterIdShift.toInt()) or
+                ((properties.workerId and maxWorkerId) shl workerIdShift.toInt()) or
                 sequence
     }
 
     private fun waitNextMillis(lastTimestamp: Long): Long {
         var timestamp = currentTime()
+
         while (timestamp <= lastTimestamp) {
+            Thread.onSpinWait()
             timestamp = currentTime()
         }
         return timestamp

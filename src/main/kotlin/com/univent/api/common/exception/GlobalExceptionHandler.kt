@@ -28,6 +28,6 @@ class GlobalExceptionHandler {
     fun handleGeneralException(e: Exception): ResponseEntity<ApiResponse<Unit>> {
         return ResponseEntity
             .status(500)
-            .body(ApiResponse.fail("500", "예상치 못한 서버 오류가 발생했습니다."))
+            .body(ApiResponse.fail("500", "예상치 못한 서버 오류가 발생했습니다. - ${e.message}"))
     }
 }
