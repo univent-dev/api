@@ -9,7 +9,7 @@ import jakarta.persistence.Table
 import java.time.Instant
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 class UserEntity (
     @Id
     val id: Long,
