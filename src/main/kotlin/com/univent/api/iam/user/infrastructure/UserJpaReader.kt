@@ -14,8 +14,9 @@ interface UserJpaReader: JpaRepository<UserEntity, Long> {
             u.email as email,
             u.createdAt as createdAt
         FROM UserEntity u
-        WHERE (:cursorDate IS NULL OR :cursorId IS NULL) 
-           OR (u.createdAt < :cursorDate OR (u.createdAt = :cursorDate AND u.id < :cursorId))
+        WHERE (:cursorDate IS NULL AND :cursorId IS NULL) 
+           OR (u.createdAt < :cursorDate
+            OR (u.createdAt = :cursorDate AND u.id < :cursorId))
         ORDER BY u.createdAt DESC, u.id DESC
     """)
     fun findAllByCursor(
