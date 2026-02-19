@@ -5,7 +5,7 @@ import java.io.Serializable
 
 abstract class BaseDomainEntity<ID : Identifier<out Serializable>>(
     val id: ID
-): BaseDomainTimeEntity(), Serializable {
+): Serializable {
     fun sameIdentityAs(other: BaseDomainEntity<*>?): Boolean {
         return other != null && this.id == other.id
     }
