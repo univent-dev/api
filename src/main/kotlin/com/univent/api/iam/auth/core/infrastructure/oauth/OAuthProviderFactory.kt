@@ -1,7 +1,7 @@
 package com.univent.api.iam.auth.core.infrastructure.oauth
 
 import com.univent.api.iam.auth.core.domain.OAuthProvider
-import com.univent.api.iam.auth.user.domain.vo.OAuthProviderType
+import com.univent.api.iam.auth.core.domain.OAuthProviderType
 import org.springframework.stereotype.Component
 
 @Component

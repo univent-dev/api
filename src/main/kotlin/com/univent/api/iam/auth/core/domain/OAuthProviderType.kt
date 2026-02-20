@@ -1,13 +1,12 @@
-package com.univent.api.iam.auth.user.domain.vo
+package com.univent.api.iam.auth.core.domain
 
 import com.univent.api.common.exception.CustomException
-import com.univent.api.iam.auth.core.domain.AuthErrorCode
 
 enum class OAuthProviderType(val value: String) {
-    KAKAO("KAKAO"),
-    GOOGLE("NAVER"),
-    APPLE("APPLE"),
-    NAVER("NAVER");
+    KAKAO("kakao"),
+    GOOGLE("google"),
+    APPLE("apple"),
+    NAVER("naver");
 
     companion object {
         fun from(value: String): OAuthProviderType {
