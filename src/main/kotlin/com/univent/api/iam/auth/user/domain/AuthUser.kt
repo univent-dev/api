@@ -6,9 +6,8 @@ import com.univent.api.iam.auth.core.domain.AuthErrorCode
 import com.univent.api.iam.auth.user.domain.event.LoginSucceededEvent
 import com.univent.api.iam.auth.user.domain.event.UserSignedUpEvent
 import com.univent.api.iam.auth.user.domain.event.UserWithdrawnEvent
-import com.univent.api.iam.auth.user.domain.vo.OAuthProviderType
+import com.univent.api.iam.auth.core.domain.OAuthProviderType
 import com.univent.api.iam.user.domain.UserId
-
 import java.time.Instant
 
 class AuthUser private constructor(
@@ -67,9 +66,9 @@ class AuthUser private constructor(
         require(oAuthId.isNotBlank()) { CustomException(AuthErrorCode.AUTH_OAUTH_ID_EMPTY) }
     }
 
-    fun updateRefreshToken(newRefreshToken: String?, updatedAt: Instant) {
+    fun updateRefreshToken(newRefreshToken: String?) {
         this.refreshToken = newRefreshToken
-        this.updatedAt = updatedAt
+        this.updatedAt = Instant.now()
     }
 
     fun delete() {
