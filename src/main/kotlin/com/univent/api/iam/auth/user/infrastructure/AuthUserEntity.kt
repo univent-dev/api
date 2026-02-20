@@ -2,7 +2,7 @@ package com.univent.api.iam.auth.user.infrastructure
 
 import com.univent.api.iam.auth.user.domain.AuthUserId
 import com.univent.api.iam.auth.user.domain.AuthUser
-import com.univent.api.iam.auth.user.domain.vo.OAuthProviderType
+import com.univent.api.iam.auth.core.domain.OAuthProviderType
 import com.univent.api.iam.user.domain.UserId
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

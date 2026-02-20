@@ -4,7 +4,7 @@ import com.univent.api.common.exception.CustomException
 import com.univent.api.iam.auth.core.domain.AuthErrorCode
 import com.univent.api.iam.auth.core.domain.OAuthProvider
 import com.univent.api.iam.auth.core.domain.OAuthUser
-import com.univent.api.iam.auth.user.domain.vo.OAuthProviderType
+import com.univent.api.iam.auth.core.domain.OAuthProviderType
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
