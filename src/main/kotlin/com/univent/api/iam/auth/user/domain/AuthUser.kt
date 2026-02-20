@@ -2,6 +2,7 @@ package com.univent.api.iam.auth.user.domain
 
 import com.univent.api.common.core.domain.AggregateRoot
 import com.univent.api.common.exception.CustomException
+import com.univent.api.iam.auth.core.domain.AuthErrorCode
 import com.univent.api.iam.auth.user.domain.event.LoginSucceededEvent
 import com.univent.api.iam.auth.user.domain.event.UserSignedUpEvent
 import com.univent.api.iam.auth.user.domain.event.UserWithdrawnEvent
