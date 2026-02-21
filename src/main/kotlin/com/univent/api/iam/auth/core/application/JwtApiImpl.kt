@@ -37,7 +37,13 @@ class JwtApiImpl(
         isAccessToken: Boolean
     ): JwtDto.JwtPayload {
         val claims = jwtProvider.getClaims(token, isAccessToken)
-        val roles = claims["roles"] as? List<AccountRole> ?: emptyList()
+        val rolesRaw = claims["roles"] as? List<*> ?: emptyList<Any>()
+
+        // 2. 문자열을 AccountRole Enum으로 변환 (안전한 변환)
+        val roles = rolesRaw.filterIsInstance<String>()
+            .mapNotNull { roleName ->
+                runCatching { AccountRole.valueOf(roleName) }.getOrNull()
+            }
 
         return JwtDto.JwtPayload(
             sub = claims.subject.toLong(),
