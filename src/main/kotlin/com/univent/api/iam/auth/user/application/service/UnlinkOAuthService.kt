@@ -23,8 +23,10 @@ class UnlinkOAuthService(
             ?: throw CustomException(AuthErrorCode.AUTH_USER_NOT_FOUND)
 
         userApi.deleteUser(UserDto.DeleteUserRequest(authUser.userId.value))
+        authUserStore.deleteById(authUser.id)
 
-        oAuthProviderFactory.getProvider(command.provider)
+        val oAuthProvider = oAuthProviderFactory.getProvider(command.provider)
+        oAuthProvider.unlinkAccount(authUser.oAuthId)
 
         authUser.delete()
     }

@@ -98,6 +98,7 @@ class OAuthLoginService(
             roles = listOf(AccountRole.USER),
             isAccessToken = true
         )
+
         val refreshToken = jwtProvider.generateToken(
             sub = authUser.userId.value.toString(),
             roles = listOf(AccountRole.USER),
@@ -111,6 +112,6 @@ class OAuthLoginService(
     }
 
     private fun decodeRedirectUrl(state: String?): String {
-        return state?.let { URLDecoder.decode(it, StandardCharsets.UTF_8.name()) } ?: ""
+        return state?.let { URLDecoder.decode(it, StandardCharsets.UTF_8) } ?: ""
     }
 }

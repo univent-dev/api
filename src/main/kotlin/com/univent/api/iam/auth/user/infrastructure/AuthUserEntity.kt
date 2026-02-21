@@ -40,10 +40,10 @@ class AuthUserEntity(
     val userId: Long,
 
     @Column(nullable = false)
-    val createdAt: Instant = Instant.now(),
+    val createdAt: Instant,
 
     @Column(nullable = false)
-    val updatedAt: Instant = Instant.now()
+    val updatedAt: Instant
 ) {
     companion object {
         fun fromDomain(authUser: AuthUser): AuthUserEntity {

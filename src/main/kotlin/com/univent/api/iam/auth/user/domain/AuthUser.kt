@@ -72,6 +72,6 @@ class AuthUser private constructor(
     }
 
     fun delete() {
-        addDomainEvent(UserWithdrawnEvent(id.value))
+        addDomainEvent(UserWithdrawnEvent(userId.value))
     }
 }

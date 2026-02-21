@@ -23,7 +23,7 @@ class AuthUserStoreImpl(
     }
 
     override fun loadByRefreshToken(refreshToken: String): AuthUser? {
-        return  jpaStore.findByRefreshToken(refreshToken)?.toDomain()
+        return jpaStore.findByRefreshToken(refreshToken)?.toDomain()
     }
 
     override fun loadByUserId(userId: UserId): AuthUser? {

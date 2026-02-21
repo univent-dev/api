@@ -21,7 +21,7 @@ class AuthorizeOAuthService(
 
         // 2. Redirect URL 인코딩 (state 파라미터로 사용)
         val encodedState = redirectUrl?.let {
-            URLEncoder.encode(it, StandardCharsets.UTF_8.name())
+            URLEncoder.encode(it, StandardCharsets.UTF_8)
         } ?: ""
 
         // 3. 각 Provider가 정의한 인가 URL 생성

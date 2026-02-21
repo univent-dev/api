@@ -32,7 +32,7 @@ class AuthUserController(
 ) {
 
     @GetMapping("/oauth/authorization")
-    fun authorizeOAuth(@RequestParam(required = false) returnPath: String?): ResponseEntity<Any> {4
+    fun authorizeOAuth(@RequestParam(required = false) returnPath: String?): ResponseEntity<Any> {
         val command = AuthorizeOAuthCommand(
             oAuthProviderType = OAuthProviderType.KAKAO,
             redirectUrl = returnPath
@@ -61,7 +61,7 @@ class AuthUserController(
 
         val result = oAuthLoginUseCase.execute(command)
 
-        val accessCookie = createCookie("accessToken", result.accessToken, 3600) // 1시간
+        val accessCookie = createCookie("accessToken", result.accessToken, 10800)
         val refreshCookie = createCookie("refreshToken", result.refreshToken, 2592000) // 30일
 
         return ResponseEntity.ok()
@@ -83,7 +83,7 @@ class AuthUserController(
 
         val result = renewTokenUseCase.execute(command)
 
-        val accessCookie = createCookie("accessToken", result.accessToken, 3600)
+        val accessCookie = createCookie("accessToken", result.accessToken, 10800)
         val refreshCookie = createCookie("refreshToken", result.refreshToken, 2592000)
 
         return ResponseEntity.ok()
