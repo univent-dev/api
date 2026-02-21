@@ -1,4 +1,4 @@
-package com.univent.api.config.security
+package com.univent.api.iam.auth.core.infrastructure.jwt
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
