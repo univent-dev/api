@@ -2,8 +2,8 @@ package com.univent.api.iam.auth.user.application.service
 
 import com.univent.api.common.core.domain.DomainEventPublisher
 import com.univent.api.common.core.domain.IdGenerator
-import com.univent.api.config.security.AccountRole
-import com.univent.api.config.security.JwtProvider
+import com.univent.api.common.core.domain.vo.AccountRole
+import com.univent.api.iam.auth.core.application.JwtProvider
 import com.univent.api.iam.auth.core.domain.OAuthUser
 import com.univent.api.iam.auth.core.infrastructure.oauth.OAuthProviderFactory
 import com.univent.api.iam.auth.user.application.OAuthLoginUseCase
