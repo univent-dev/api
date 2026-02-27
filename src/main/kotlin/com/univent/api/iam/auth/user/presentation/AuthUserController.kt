@@ -77,7 +77,7 @@ class AuthUserController(
         @CookieValue(name = "refreshToken") refreshToken: String
     ): ResponseEntity<Unit> {
         val command = RenewTokenCommand(
-            userId = UserId(user.userId),
+            userId = UserId(user.id),
             refreshToken = refreshToken
         )
 
@@ -95,7 +95,7 @@ class AuthUserController(
     @PostMapping("/logout")
     @PreAuthorize("hasRole('USER')")
     fun logout(@AuthenticationPrincipal user: UserPayload): ResponseEntity<Unit> {
-        val command = LogoutCommand(userId = UserId(user.userId))
+        val command = LogoutCommand(userId = UserId(user.id))
         logoutUseCase.execute(command)
 
         return ResponseEntity.ok()
@@ -108,7 +108,7 @@ class AuthUserController(
     @PreAuthorize("hasRole('USER')")
     fun withdraw(@AuthenticationPrincipal user: UserPayload): ResponseEntity<Unit> {
         val command = UnlinkOAuthCommand(
-            userId = UserId(user.userId),
+            userId = UserId(user.id),
             provider = OAuthProviderType.KAKAO
         )
         unlinkOAuthUseCase.execute(command)
