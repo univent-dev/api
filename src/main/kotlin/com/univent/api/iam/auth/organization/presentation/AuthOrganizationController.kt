@@ -24,6 +24,7 @@ import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -81,10 +82,11 @@ class AuthOrganizationController(
         return ResponseEntity.ok().build()
     }
 
+    @PreAuthorize("hasRole('ORGANIZATION')")
     @PostMapping("/refresh")
     fun renewToken(
         @AuthenticationPrincipal organization: OrganizationPayload,
-        @CookieValue("organizationRefreshToken") refreshToken: String,
+        @CookieValue("orgRefreshToken") refreshToken: String,
         response: HttpServletResponse
     ): ResponseEntity<Unit> {
         val command = RenewOrganizationTokenCommand(
@@ -99,6 +101,7 @@ class AuthOrganizationController(
         return ResponseEntity.ok().build()
     }
 
+    @PreAuthorize("hasRole('ORGANIZATION')")
     @PostMapping("/logout")
     fun logout(
         @AuthenticationPrincipal organization: OrganizationPayload,
@@ -112,6 +115,7 @@ class AuthOrganizationController(
         return ResponseEntity.ok().build()
     }
 
+    @PreAuthorize("hasRole('ORGANIZATION')")
     @DeleteMapping("/withdraw")
     fun withdraw(
         @AuthenticationPrincipal organization: OrganizationPayload,
@@ -125,6 +129,7 @@ class AuthOrganizationController(
         return ResponseEntity.ok().build()
     }
 
+    @PreAuthorize("hasRole('ORGANIZATION')")
     @PatchMapping("/change-password")
     fun changePassword(
         @AuthenticationPrincipal organization: OrganizationPayload,
@@ -140,30 +145,24 @@ class AuthOrganizationController(
         return ResponseEntity.ok().build()
     }
 
+    private fun buildAuthCookie(name: String, value: String, maxAge: Int): Cookie {
+        return Cookie(name, value).apply {
+            isHttpOnly = true
+            secure = true
+            path = "/"
+            setAttribute("SameSite", "None")
+            this.maxAge = maxAge
+        }
+    }
     private fun setAuthCookies(response: HttpServletResponse, accessToken: String, refreshToken: String) {
-        val accessCookie = Cookie("organizationAccessToken", accessToken).apply {
-            isHttpOnly = true
-            path = "/"
-            maxAge = 3600 // 예: 1시간
-        }
-        val refreshCookie = Cookie("organizationRefreshToken", refreshToken).apply {
-            isHttpOnly = true
-            path = "/"
-            maxAge = 604800 // 예: 7일
-        }
+        val accessCookie = buildAuthCookie("orgAccessToken", accessToken, 3600) // 예: 1시간
+        val refreshCookie = buildAuthCookie("orgRefreshToken", refreshToken, 604800) // 예: 7일
         response.addCookie(accessCookie)
         response.addCookie(refreshCookie)
     }
-
     private fun clearAuthCookies(response: HttpServletResponse) {
-        val accessCookie = Cookie("organizationAccessToken", null).apply {
-            maxAge = 0
-            path = "/"
-        }
-        val refreshCookie = Cookie("organizationRefreshToken", null).apply {
-            maxAge = 0
-            path = "/"
-        }
+        val accessCookie = buildAuthCookie("orgAccessToken", "", 0)
+        val refreshCookie = buildAuthCookie("orgRefreshToken", "", 0)
         response.addCookie(accessCookie)
         response.addCookie(refreshCookie)
     }
