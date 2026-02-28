@@ -2,6 +2,9 @@ package com.univent.api.config.security
 
 import com.univent.api.common.core.presentation.UserPayload
 import com.univent.api.common.core.domain.vo.AccountRole
+import com.univent.api.common.core.presentation.AdminPayload
+import com.univent.api.common.core.presentation.AuthenticationPayload
+import com.univent.api.common.core.presentation.OrganizationPayload
 import com.univent.api.iam.JwtApi
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.MalformedJwtException
@@ -29,7 +32,8 @@ class JwtAuthenticationFilter(
         if (token != null) {
             try {
                 val claims = jwtApi.getPayload(token, true)
-                setAuthentication(claims.sub, claims.roles)
+                val principal = createPrincipal(claims.sub, claims.roles)
+                setAuthentication(principal)
             } catch (e: Exception) {
                 handleJwtException(request, e)
                 SecurityContextHolder.clearContext()
@@ -47,15 +51,28 @@ class JwtAuthenticationFilter(
             ?: cookies.find { it.name == "accessToken" }?.value
     }
 
-    private fun setAuthentication(sub: Long, roles: List<AccountRole>) {
-        val authorities = roles.map { SimpleGrantedAuthority(it.value) }
+    private fun createPrincipal(sub: Long, roles: List<AccountRole>): AuthenticationPayload {
+        return when {
+            roles.contains(AccountRole.ADMIN) -> AdminPayload(id = sub, roles = roles)
 
-        val principal = UserPayload(
-            userId = sub,
-            roles = roles
+            roles.contains(AccountRole.ORGANIZATION) -> OrganizationPayload(
+                id = sub,
+                roles = roles
+            )
+
+            else -> UserPayload(id = sub, roles = roles)
+        }
+    }
+
+    private fun setAuthentication(principal: AuthenticationPayload) {
+        val authorities = principal.roles.map { SimpleGrantedAuthority(it.value) }
+
+        val auth = UsernamePasswordAuthenticationToken(
+            principal,
+            null,
+            authorities
         )
 
-        val auth = UsernamePasswordAuthenticationToken(principal, null, authorities)
         SecurityContextHolder.getContext().authentication = auth
     }
 

@@ -26,12 +26,12 @@ class UserController(
     fun getMyInfo(
         @AuthenticationPrincipal user: UserPayload
     ): UserView {
-        val query = GetUserQuery(user.userId)
+        val query = GetUserQuery(user.id)
         return getUserUseCase.execute(query)
     }
 
     @GetMapping("/admin")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     fun getAll(@ModelAttribute dto: GetAllUsersDto.Req): List<UserAdminView> {
         val query = GetAllUsersQuery(
             pageSize = dto.pageSize,
