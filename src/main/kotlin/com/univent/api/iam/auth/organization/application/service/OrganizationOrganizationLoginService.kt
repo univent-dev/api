@@ -5,8 +5,8 @@ import com.univent.api.common.exception.CustomException
 import com.univent.api.iam.JwtApi
 import com.univent.api.iam.auth.core.domain.AuthErrorCode
 import com.univent.api.iam.auth.core.domain.PasswordHasher
-import com.univent.api.iam.auth.organization.application.LoginUseCase
-import com.univent.api.iam.auth.organization.application.command.LoginCommand
+import com.univent.api.iam.auth.organization.application.OrganizationLoginUseCase
+import com.univent.api.iam.auth.organization.application.command.OrganizationLoginCommand
 import com.univent.api.iam.auth.organization.application.result.LoginResult
 import com.univent.api.iam.auth.organization.domain.AuthOrganization
 import com.univent.api.iam.auth.organization.domain.AuthOrganizationStore
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class LoginService(
+class OrganizationOrganizationLoginService(
     private val authOrganizationStore: AuthOrganizationStore,
     private val passwordHasher: PasswordHasher,
     private val jwtApi: JwtApi
-) : LoginUseCase {
+) : OrganizationLoginUseCase {
 
     @Transactional
-    override fun execute(command: LoginCommand): LoginResult {
+    override fun execute(command: OrganizationLoginCommand): LoginResult {
         val authOrganization = validateAccount(
             accountId = command.accountId.trim(),
             password = command.password.trim()
