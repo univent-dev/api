@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class OrganizationOrganizationLogoutService(
+class OrganizationLogoutService(
     private val authOrganizationStore: AuthOrganizationStore
 ): OrganizationLogoutUseCase {
     @Transactional

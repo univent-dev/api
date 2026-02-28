@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class OrganizationOrganizationLoginService(
+class OrganizationLoginService(
     private val authOrganizationStore: AuthOrganizationStore,
     private val passwordHasher: PasswordHasher,
     private val jwtApi: JwtApi
@@ -43,6 +43,10 @@ class OrganizationOrganizationLoginService(
 
         val authOrganization = authOrganizationStore.findByAccountId(validAccountId)
             ?: throw CustomException(AuthErrorCode.AUTH_ORGANIZATION_NOT_FOUND)
+
+        if (authOrganization.isDeleted) {
+            throw CustomException(AuthErrorCode.AUTH_ORGANIZATION_NOT_FOUND)
+        }
 
         val isPasswordValid = passwordHasher.compare(password, authOrganization.passwordHash.value)
         if (!isPasswordValid) {

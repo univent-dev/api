@@ -27,5 +27,5 @@ enum class AuthErrorCode(
     AUTH_ORGANIZATION_ACCOUNT_ID_ALREADY_EXISTS(ErrorStatus.CONFLICT, "이미 존재하는 계정 ID입니다."),
     AUTH_ORGANIZATION_INVALID_ACCESS_TOKEN(ErrorStatus.UNAUTHORIZED, "유효하지 않은 액세스 토큰입니다."),
     AUTH_ORGANIZATION_WITHDRAW_FAILED(ErrorStatus.INTERNAL_ERROR, "조직 탈퇴 처리에 실패했습니다."),
-    AUTH_ORGANIZATION_INVALID_PASSWORD(ErrorStatus.BAD_REQUEST, "유효하지 않은 비밀번호입니다.")
+    AUTH_ORGANIZATION_INVALID_PASSWORD(ErrorStatus.BAD_REQUEST, "유효하지 않은 비밀번호입니다."),
 }
