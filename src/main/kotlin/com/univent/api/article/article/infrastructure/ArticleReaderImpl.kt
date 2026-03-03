@@ -88,6 +88,7 @@ class ArticleReaderImpl(
             when (sortBy) {
                 "scrapCount" -> " ORDER BY a.scrapCount DESC "
                 "viewCount" -> " ORDER BY a.viewCount DESC "
+                "createdAt" -> " ORDER BY a.createdAt DESC "
                 else -> " ORDER BY a.id DESC "
             }
         }

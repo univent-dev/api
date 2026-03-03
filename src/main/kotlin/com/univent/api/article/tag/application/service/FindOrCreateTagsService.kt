@@ -26,7 +26,10 @@ class FindOrCreateTagsService(
     }
 
     private fun findOrCreateTag(name: String): Tag {
-        return tagStore.loadByName(name) ?: createNewTag(name)
+        val normalizedName = name.trim().lowercase()
+
+        return tagStore.loadByName(normalizedName)
+            ?: createNewTag(normalizedName)
     }
 
     private fun createNewTag(name: String): Tag {

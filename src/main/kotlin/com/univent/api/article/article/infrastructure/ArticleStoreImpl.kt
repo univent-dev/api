@@ -16,7 +16,9 @@ class ArticleStoreImpl(
     }
 
     override fun loadById(id: ArticleId): Article? {
-        return articleJpaRepository.findById(id.value).orElse(null).toDomain()
+        return articleJpaRepository.findById(id.value)
+            .map { it.toDomain() }
+            .orElse(null)
     }
 
     override fun deleteById(id: ArticleId) {

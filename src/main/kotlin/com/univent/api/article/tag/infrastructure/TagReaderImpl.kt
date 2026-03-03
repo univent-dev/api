@@ -21,11 +21,23 @@ class TagReaderImpl(
     }
 
     override fun findByName(name: String): TagView {
-        TODO("Not yet implemented")
+        val entity = tagJpaReader.findByName(name)
+            ?: throw IllegalArgumentException("'$name' 태그가 존재하지 않습니다.")
+
+        return TagView(
+            id = entity.id,
+            name = entity.name
+        )
     }
 
     override fun findAll(): List<TagView> {
-        TODO("Not yet implemented")
-    }
+        val entities = tagJpaReader.findAll()
 
+        return entities.map {
+            TagView(
+                id = it.id,
+                name = it.name
+            )
+        }
+    }
 }
