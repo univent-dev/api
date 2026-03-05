@@ -10,4 +10,6 @@ interface ArticleReader {
         keyword: String? = null,
         searchType: SearchType? = null
     ): List<ArticleReadModel>
+
+    fun findAllByIds(ids: List<Long>): List<ArticleReadModel>
 }
