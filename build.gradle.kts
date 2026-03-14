@@ -58,6 +58,11 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
 
+	// AWS
+	implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.1"))
+	implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
+	implementation("io.awspring.cloud:spring-cloud-aws-starter-parameter-store")
+
 	// Testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")

@@ -37,6 +37,17 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY_ID}
+        secret-key: ${AWS_SECRET_ACCESS_KEY}
+      region:
+        static: ${AWS_REGION}
+      s3:
+        endpoint: ${AWS_S3_BUCET_DOMAIN}
+        cloudfront-domain: ${AWS_S3_CLOUDFRONT_DOMAIN}
+
 logging:
   level:
     org.hibernate.sql: debug
