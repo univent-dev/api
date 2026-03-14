@@ -8,10 +8,10 @@ import com.univent.api.article.scrap.domain.Scrap
 import com.univent.api.article.scrap.domain.ScrapErrorCode
 import com.univent.api.article.scrap.domain.ScrapStore
 import com.univent.api.article.scrap.domain.event.ScrapAddedEvent
+import com.univent.api.common.core.domain.DomainEventPublisher
 import com.univent.api.common.core.domain.IdGenerator
 import com.univent.api.common.core.domain.vo.identifier.ScrapId
 import com.univent.api.common.exception.CustomException
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,7 +20,7 @@ class AddScrapService(
     private val scrapStore: ScrapStore,
     private val articleApi: ArticleApi,
     private val idGenerator: IdGenerator,
-    private val applicationEventPublisher: ApplicationEventPublisher
+    private val domainEventPublisher: DomainEventPublisher
 ) : AddScrapUseCase {
     @Transactional
     override fun execute(command: AddScrapCommand) {
@@ -32,19 +32,14 @@ class AddScrapService(
         val scrap = Scrap.create(
             id = ScrapId(idGenerator.generateId()),
             articleId = command.articleId,
-            userId = command.userId
+            userId = command.userId,
+            tags = article.tags
         )
 
         scrapStore.save(scrap)
 
         articleApi.increaseScrapCount(ArticleDto.IncreaseScrapCountRequest(command.articleId.value))
 
-        applicationEventPublisher.publishEvent(
-            ScrapAddedEvent(
-                userId = command.userId.value,
-                articleId = command.articleId.value,
-                tags = article.tags
-            )
-        )
+        domainEventPublisher.publish(scrap)
     }
 }

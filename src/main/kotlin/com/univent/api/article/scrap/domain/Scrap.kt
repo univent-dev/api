@@ -1,5 +1,6 @@
 package com.univent.api.article.scrap.domain
 
+import com.univent.api.article.scrap.domain.event.ScrapAddedEvent
 import com.univent.api.article.scrap.domain.event.ScrapDeletedEvent
 import com.univent.api.common.core.domain.AggregateRoot
 import com.univent.api.common.core.domain.vo.identifier.ArticleId
@@ -19,17 +20,27 @@ class Scrap private constructor(
 
     private fun validate() {}
 
-    fun delete(tags: List<String>) {
-        addDomainEvent(ScrapDeletedEvent(userId.value, articleId.value, tags))
-    }
-
     companion object {
-        fun create(id: ScrapId, articleId: ArticleId, userId: UserId): Scrap {
-            return Scrap(id, articleId, userId, Instant.now())
+        fun create(id: ScrapId, articleId: ArticleId, userId: UserId, tags: List<String>): Scrap {
+            val scrap = Scrap(id, articleId, userId, Instant.now())
+            scrap.addDomainEvent(
+                ScrapAddedEvent(
+                    userId = userId.value,
+                    articleId = articleId.value,
+                    tags = tags
+                )
+            )
+
+            return scrap
         }
 
         fun of(id: ScrapId, articleId: ArticleId, userId: UserId, createdAt: Instant): Scrap {
             return Scrap(id, articleId, userId, createdAt)
         }
     }
+
+    fun delete(tags: List<String>) {
+        addDomainEvent(ScrapDeletedEvent(userId.value, articleId.value, tags))
+    }
+
 }
