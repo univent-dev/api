@@ -104,6 +104,10 @@ class ArticleReaderImpl(
         return typedQuery.resultList.map { it.toReadModel() }
     }
 
+    override fun findAllByIds(ids: List<Long>): List<ArticleReadModel> {
+        return articleJpaReader.findAllById(ids).map { it.toReadModel() }
+    }
+
     // 변환 로직을 별도 확장 함수나 메서드로 분리 (중복 제거)
     private fun ArticleEntity.toReadModel() = ArticleReadModel(
         id = this.id,
