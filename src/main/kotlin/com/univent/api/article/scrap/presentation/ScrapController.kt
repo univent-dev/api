@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -54,7 +55,7 @@ class ScrapController(
     @GetMapping
     fun getScrappedArticles(
         @AuthenticationPrincipal user: UserPayload,
-        @RequestBody reqDto: GetScrappedArticlesDto.Req
+        @ModelAttribute reqDto: GetScrappedArticlesDto.Req
     ): List<ArticleDto.ArticleSummary> {
         val query = reqDto.toQuery(user.id)
         return getScrappedArticlesUseCase.execute(query)

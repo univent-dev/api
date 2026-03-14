@@ -21,7 +21,7 @@ class DeleteScrapService(
     override fun execute(command: DeleteScrapCommand) {
         val existingScrap =
             scrapStore.loadByArticleIdAndUserId(command.articleId, command.userId)
-                ?: throw CustomException(ScrapErrorCode.SCRAP_ALREADY_EXISTS)
+                ?: throw CustomException(ScrapErrorCode.SCRAP_NOT_FOUND)
 
         val article = articleApi.getArticleById(ArticleDto.GetArticleByIdRequest(command.articleId.value))
 

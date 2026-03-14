@@ -2,7 +2,6 @@ package com.univent.api.article.scrap.application.service
 
 import com.univent.api.article.article.ArticleApi
 import com.univent.api.article.article.ArticleDto
-import com.univent.api.article.article.application.view.ArticleView
 import com.univent.api.article.scrap.application.GetScrappedArticlesUseCase
 import com.univent.api.article.scrap.application.query.GetScrappedArticlesQuery
 import com.univent.api.article.scrap.application.view.ScrapReader
