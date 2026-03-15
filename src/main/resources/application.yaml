@@ -45,7 +45,7 @@ spring:
       region:
         static: ${AWS_REGION}
       s3:
-        endpoint: ${AWS_S3_BUCET_DOMAIN}
+        endpoint: ${AWS_S3_BUCKET_DOMAIN}
         cloudfront-domain: ${AWS_S3_CLOUDFRONT_DOMAIN}
 
 logging:

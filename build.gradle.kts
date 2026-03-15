@@ -59,7 +59,7 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
 
 	// AWS
-	implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.1"))
+	implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:4.0.0"))
 	implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
 	implementation("io.awspring.cloud:spring-cloud-aws-starter-parameter-store")
 
