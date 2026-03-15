@@ -31,13 +31,16 @@ class S3FileStorage(
     private fun generateKey(fileName: String, articleId: Long): String {
         val extension = fileName.substringAfterLast('.', "")
         val uuid = UUID.randomUUID()
-        return "images/$articleId/$uuid.$extension"
+        val fileNamePart = if (extension.isNotEmpty()) "$uuid.$extension" else uuid.toString()
+
+        return "images/$articleId/$fileNamePart"
     }
 
     private fun generateImageUrl(key: String): String = "${properties.cloudfrontDomain}/$key"
 
     private fun generatePresignedUrl(mimeType: String, objectKey: String): String {
         val putObjectRequest = PutObjectRequest.builder()
+            .bucket(properties.bucketName)
             .key(objectKey)
             .contentType(mimeType)
             .build()
