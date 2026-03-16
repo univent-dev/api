@@ -49,6 +49,10 @@ spring:
         cloudfront-domain: ${AWS_S3_CLOUDFRONT_DOMAIN}
         bucket-name: ${AWS_S3_BUCKET_NAME}
 
+amplitude:
+  api-key: ${AMPLITUDE_API_KEY}
+  secret-key: ${AMPLITUDE_SECRET_KEY}
+
 logging:
   level:
     org.hibernate.sql: debug
