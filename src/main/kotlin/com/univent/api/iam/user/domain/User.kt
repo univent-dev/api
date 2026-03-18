@@ -2,7 +2,7 @@ package com.univent.api.iam.user.domain
 
 import com.univent.api.common.core.domain.AggregateRoot
 import com.univent.api.common.exception.CustomException
-import com.univent.api.iam.user.domain.event.UserDeletedEvent
+import com.univent.api.common.core.domain.event.user.UserDeletedEvent
 import java.time.Instant
 
 class User private constructor(

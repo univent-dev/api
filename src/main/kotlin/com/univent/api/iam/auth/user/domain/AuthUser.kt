@@ -3,9 +3,9 @@ package com.univent.api.iam.auth.user.domain
 import com.univent.api.common.core.domain.AggregateRoot
 import com.univent.api.common.exception.CustomException
 import com.univent.api.iam.auth.core.domain.AuthErrorCode
-import com.univent.api.iam.auth.user.domain.event.LoginSucceededEvent
-import com.univent.api.iam.auth.user.domain.event.UserSignedUpEvent
-import com.univent.api.iam.auth.user.domain.event.UserWithdrawnEvent
+import com.univent.api.common.core.domain.event.auth.LoginSucceededEvent
+import com.univent.api.common.core.domain.event.auth.UserSignedUpEvent
+import com.univent.api.common.core.domain.event.auth.UserWithdrawnEvent
 import com.univent.api.iam.auth.core.domain.OAuthProviderType
 import com.univent.api.iam.user.domain.UserId
 import java.time.Instant
