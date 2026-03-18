@@ -12,7 +12,6 @@ class AmplitudeConfig(
     fun amplitudeClient(): Amplitude {
         return Amplitude.getInstance().apply {
             init(properties.apiKey)
-
         }
     }
 }

@@ -2,7 +2,6 @@ package com.univent.api.analytics.application
 
 import com.univent.api.common.core.domain.event.scrap.ScrapAddedEvent
 import com.univent.api.common.core.domain.event.scrap.ScrapDeletedEvent
-import mu.KotlinLogging
 import org.springframework.modulith.events.ApplicationModuleListener
 import org.springframework.stereotype.Component
 
@@ -10,8 +9,6 @@ import org.springframework.stereotype.Component
 class ScrapAnalyticsHandler(
     private val eventTracker: EventTracker
 ) {
-    private val logger = KotlinLogging.logger {}
-
     @ApplicationModuleListener
     fun onScrapAdded(event: ScrapAddedEvent) {
         eventTracker.track(
