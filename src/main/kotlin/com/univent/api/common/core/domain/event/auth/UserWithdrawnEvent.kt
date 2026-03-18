@@ -1,7 +1,7 @@
-package com.univent.api.iam.user.domain.event
+package com.univent.api.common.core.domain.event.auth
 
 import com.univent.api.common.core.domain.DomainEvent
 
-class UserDeletedEvent(
+data class UserWithdrawnEvent(
     val userId: Long
 ): DomainEvent()

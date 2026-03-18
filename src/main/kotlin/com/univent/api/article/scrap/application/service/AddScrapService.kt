@@ -7,7 +7,6 @@ import com.univent.api.article.scrap.application.command.AddScrapCommand
 import com.univent.api.article.scrap.domain.Scrap
 import com.univent.api.article.scrap.domain.ScrapErrorCode
 import com.univent.api.article.scrap.domain.ScrapStore
-import com.univent.api.article.scrap.domain.event.ScrapAddedEvent
 import com.univent.api.common.core.domain.DomainEventPublisher
 import com.univent.api.common.core.domain.IdGenerator
 import com.univent.api.common.core.domain.vo.identifier.ScrapId
