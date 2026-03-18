@@ -1,7 +1,7 @@
 package com.univent.api.article.scrap.domain
 
-import com.univent.api.article.scrap.domain.event.ScrapAddedEvent
-import com.univent.api.article.scrap.domain.event.ScrapDeletedEvent
+import com.univent.api.common.core.domain.event.scrap.ScrapAddedEvent
+import com.univent.api.common.core.domain.event.scrap.ScrapDeletedEvent
 import com.univent.api.common.core.domain.AggregateRoot
 import com.univent.api.common.core.domain.vo.identifier.ArticleId
 import com.univent.api.common.core.domain.vo.identifier.ScrapId

@@ -1,4 +1,4 @@
-package com.univent.api.article.scrap.domain.event
+package com.univent.api.common.core.domain.event.scrap
 
 import com.univent.api.common.core.domain.DomainEvent
 
