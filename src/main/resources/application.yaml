@@ -10,6 +10,7 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
+        default_batch_fetch_size: 100
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -36,7 +37,34 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY_ID}
+        secret-key: ${AWS_SECRET_ACCESS_KEY}
+      region:
+        static: ${AWS_REGION}
+      s3:
+        endpoint: ${AWS_S3_BUCKET_DOMAIN}
+        cloudfront-domain: ${AWS_S3_CLOUDFRONT_DOMAIN}
+        bucket-name: ${AWS_S3_BUCKET_NAME}
+
+amplitude:
+  api-key: ${AMPLITUDE_API_KEY}
+  secret-key: ${AMPLITUDE_SECRET_KEY}
+
 logging:
   level:
     org.hibernate.sql: debug
     org.hibernate.type: trace
+
+jwt:
+  refresh:
+    secret: ${JWT_REFRESH_SECRET}
+    expiration: ${JWT_REFRESH_EXPIRATION}
+  access:
+    secret: ${JWT_ACCESS_SECRET}
+    expiration: ${JWT_ACCESS_EXPIRATION}
+
+kakao:
+  admin-key: ${KAKAO_ADMIN_KEY}
